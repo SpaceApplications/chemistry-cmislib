@@ -23,7 +23,7 @@ not know anything about CMIS or do anything special with regard to the
 response it receives.
 """
 
-from urllib import urlencode
+from urllib.parse import urlencode
 import logging
 import httplib2
 
@@ -46,6 +46,12 @@ class RESTService(object):
             **kwargs):
 
         """ Makes a get request to the URL specified."""
+
+        # Duck typing check to convert byte -> str 
+        try:
+            url = url.decode()
+        except AttributeError:
+            pass
 
         headers = {}
         if kwargs:
