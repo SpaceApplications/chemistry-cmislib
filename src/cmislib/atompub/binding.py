@@ -37,6 +37,7 @@ import mimetypes
 from xml.parsers.expat import ExpatError
 import datetime
 import io
+import base64
 import logging
 from xml.dom import minidom
 
@@ -4014,7 +4015,7 @@ def getEntryXmlDoc(repo=None, objectTypeId=None, properties=None, contentFile=No
         # present, so it seems reasonable to use CMIS_RA content for now
         # and encode everything.
 
-        fileData = contentFile.read().encode("base64")
+        fileData = base64.b64encode(contentFile.read()).decode('utf-8')
         mediaElement = entryXmlDoc.createElementNS(CMISRA_NS, 'cmisra:mediatype')
         mediaElementText = entryXmlDoc.createTextNode(mimetype)
         mediaElement.appendChild(mediaElementText)
